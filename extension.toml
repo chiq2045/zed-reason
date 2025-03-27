@@ -3,24 +3,13 @@ name = "Reason"
 description = "Reason support."
 version = "0.0.1"
 schema_version = 1
-authors = ["Rashid Almheiri <69181766+huwaireb@users.noreply.github.com>"]
-repository = "https://github.com/zed-industries/zed"
+authors = ["Charles Oroko <charles.oroko@outlook.com>"]
+repository = "https://github.com/chiq2045/zed-reason"
 
 [language_servers.ocamllsp]
 name = "ocamllsp"
-languages = ["Reason"]
+language = "Reason"
 
 [grammars.reason]
 repository = "https://github.com/reasonml-editor/tree-sitter-reason"
 commit = "0226cfecaa2257d56d7c3f364f789cba042e403f"
-path = "grammars/reason"
-
-# [grammars.ocaml]
-# repository = "https://github.com/tree-sitter/tree-sitter-ocaml"
-# commit = "0b12614ded3ec7ed7ab7933a9ba4f695ba4c342e"
-# path = "grammars/ocaml"
-
-# [grammars.ocaml_interface]
-# repository = "https://github.com/tree-sitter/tree-sitter-ocaml"
-# commit = "0b12614ded3ec7ed7ab7933a9ba4f695ba4c342e"
-# path = "grammars/interface"
