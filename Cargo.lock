@@ -95,6 +95,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "reason"
+version = "0.1.0"
+dependencies = [
+ "zed_extension_api",
+]
+
+[[package]]
 name = "ryu"
 version = "1.0.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -319,11 +326,4 @@ dependencies = [
  "serde",
  "serde_json",
  "wit-bindgen",
-]
-
-[[package]]
-name = "zed_reason"
-version = "0.0.1"
-dependencies = [
- "zed_extension_api",
 ]

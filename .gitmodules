@@ -1,0 +1,3 @@
+[submodule "grammars/reason"]
+	path = grammars/reason
+	url = https://github.com/reasonml-editor/tree-sitter-reason

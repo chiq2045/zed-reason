@@ -1,5 +1,4 @@
 use std::ops::Range;
-use std::path::PathBuf;
 use zed::lsp::{Completion, CompletionKind, Symbol, SymbolKind};
 use zed::{CodeLabel, CodeLabelSpan};
 use zed_extension_api::{self as zed, Result};
@@ -20,35 +19,15 @@ impl zed::Extension for ReasonExtension {
         _language_server_id: &zed::LanguageServerId,
         worktree: &zed::Worktree,
     ) -> Result<zed::Command> {
-        if let Some(opam_path) = worktree.which("opam") {
-            let worktree_root = worktree.root_path();
-            let mut args = vec!["exec".to_string()];
+        let path = worktree.which("ocamllsp").ok_or_else(|| {
+            "ocamllsp (ocaml-language-server) must be installed manually.".to_string()
+        })?;
 
-            let opam_switch_path = PathBuf::from(&worktree_root).join("_opam");
-
-            if opam_switch_path.is_dir() {
-                args.push("--switch".to_string());
-                args.push(opam_switch_path.display().to_string());
-            }
-            args.push("--".to_string());
-            args.push("ocamllsp".to_string());
-
-            Ok(zed::Command {
-                command: opam_path,
-                args,
-                env: worktree.shell_env(),
-            })
-        } else {
-            // Fallback to direct ocamllsp if available
-            let ocamllsp_path = worktree.which("ocamllsp")
-                .ok_or_else(|| "Neither opam nor ocamllsp is available. Please install either opam or ocamllsp.".to_string())?;
-
-            Ok(zed::Command {
-                command: ocamllsp_path,
-                args: vec![],
-                env: worktree.shell_env(),
-            })
-        }
+        Ok(zed::Command {
+            command: path,
+            args: Vec::new(),
+            env: Default::default(),
+        })
     }
 
     fn label_for_completion(
@@ -93,7 +72,7 @@ impl zed::Extension for ReasonExtension {
             }
 
             Some((CompletionKind::Field, detail)) => {
-                let filter_range_start = if name.starts_with(['~', '?']) { 1 } else { 0 };
+                let filter_range_start = if name.starts_with(&['~', '?']) { 1 } else { 0 };
 
                 let record_prefix = "type t = { ";
                 let record_suffix = "; }";
